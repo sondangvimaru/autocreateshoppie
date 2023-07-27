@@ -528,13 +528,13 @@ namespace WindowsFormsApp1
                
                 string extensionPath = "addcookie.crx";
             options.AddExtension(extensionPath);
-                Proxy proxy = new Proxy();
-                proxy.Kind = ProxyKind.Manual;
-                proxy.HttpProxy = proxyAddress;
-                proxy.SslProxy = proxyAddress;
+                //Proxy proxy = new Proxy();
+                //proxy.Kind = ProxyKind.Manual;
+                //proxy.HttpProxy = proxyAddress;
+                //proxy.SslProxy = proxyAddress;
 
 
-                options.Proxy = proxy;
+                //options.Proxy = proxy;
 
 
 
@@ -1061,12 +1061,21 @@ namespace WindowsFormsApp1
                                     goto redelete;
                                 }
                             }
-                        Thread.Sleep(500);
+                        Thread.Sleep(2500);
                         driver.Navigate().GoToUrl("https://sellercenter.lazada.vn/apps/product/publish");
                     }
-
+                        int count_check_pl = 0;
                     Thread.Sleep(500);
-
+                        while (driver.Url.IndexOf("publish") <0)
+                        {
+                            count_check_pl++;
+                             Thread.Sleep(1000);
+                            if(count_check_pl >= 20)
+                            {
+                                driver.Navigate().GoToUrl("https://sellercenter.lazada.vn/apps/product/publish");
+                                Thread.Sleep(3000);
+                            }
+                        }
                     var btn_chooseimg = driver.FindElements(By.TagName("button"));
                     while (btn_chooseimg.Count < 2)
                     {
@@ -1742,16 +1751,26 @@ namespace WindowsFormsApp1
             }
                 IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
 
-                jsExecutor.ExecuteScript("window.scrollBy(0, 1200);");
+                jsExecutor.ExecuteScript("window.scrollBy(0, 1000);");
                 var mota = driver.FindElements(By.ClassName("html-content"));
-                while(mota.Count <2)
+                while(mota.Count <1)
                 {
                     mota = driver.FindElements(By.ClassName("html-content"));
                     Thread.Sleep(1000);
                 }
                 Thread.Sleep(500);
-                string content = mota[0].Text + "\n" + mota[1].Text;
-                result.dec = content;
+                if (mota.Count < 2)
+                {
+                    string content = mota[0].Text;
+
+                    result.dec = content;
+                }
+                else
+                {
+                    string content = mota[0].Text + "\n" + mota[1].Text;
+
+                    result.dec = content;
+                }
                 driver.Quit();
             if (result.linksimg.Count > 1) return result;
             }
