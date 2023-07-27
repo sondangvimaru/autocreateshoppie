@@ -1027,6 +1027,7 @@ namespace WindowsFormsApp1
                     reclcik:
                           var  list_img_aviablett = driver.FindElements(By.ClassName("dada-image-table__item"));
                             var cmf_upload = driver.FindElements(By.ClassName("material-center-btn"));
+                            int inside= 0;
                         while (cmf_upload.Count < 1)
                         {
                             cmf_upload = driver.FindElements(By.ClassName("material-center-btn"));
@@ -1039,11 +1040,18 @@ namespace WindowsFormsApp1
                                 {
                                     list_img_aviablett = driver.FindElements(By.ClassName("dada-image-table__item"));
                                 }
+                                Thread.Sleep(1000);
+                                inside++;
+                                if (inside >= 10) break;
                         }
                         Thread.Sleep(500);
                         try
                         {
-                            cmf_upload[0].Click();
+                                if (cmf_upload.Count > 0)
+                                {
+                                cmf_upload[0].Click();
+                                }
+                           
                         }
                         catch
                         {
