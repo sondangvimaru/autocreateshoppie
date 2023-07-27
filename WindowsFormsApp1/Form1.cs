@@ -525,7 +525,7 @@ namespace WindowsFormsApp1
 
                 }
                 options.AddArgument("--start-maximized");
-                options.AddArgument("--incognito");
+               
                 string extensionPath = "addcookie.crx";
             options.AddExtension(extensionPath);
                 Proxy proxy = new Proxy();
@@ -926,7 +926,7 @@ namespace WindowsFormsApp1
             await rungetsp(list_product_info);
 
             Thread.Sleep(1000);
-            int numsp = new Random().Next(11, 13);
+            int numsp = new Random().Next(10, 12);
             for (int pr = 0; pr < list_product_info.Count; pr++)
             {
                 if ((pr) > numsp) break;
@@ -937,17 +937,17 @@ namespace WindowsFormsApp1
 
                     if (check == 0)
                     {
-
+                            redelete:
                         driver.Navigate().GoToUrl("https://sellercenter.lazada.vn/apps/mediacenter");
 
-                        var divpool = driver.FindElements(By.ClassName("mc-selectable"));
-                        while (divpool.Count < 2)
-                        {
-                            divpool = driver.FindElements(By.ClassName("mc-selectable"));
-                            Thread.Sleep(1000);
-                        }
-                        Thread.Sleep(500);
-                        var list_img_aviable = divpool[1].FindElements(By.ClassName("dada-image-table__item"));
+                        //var divpool = driver.FindElements(By.ClassName("mc-selectable"));
+                        //while (divpool.Count < 2)
+                        //{
+                        //    divpool = driver.FindElements(By.ClassName("mc-selectable"));
+                        //    Thread.Sleep(1000);
+                        //}
+                        Thread.Sleep(3000);
+                        var list_img_aviable = driver.FindElements(By.ClassName("dada-image-table__item"));
                         Thread.Sleep(2000);
                         if (list_img_aviable.Count > 0)
                         {
@@ -965,23 +965,16 @@ namespace WindowsFormsApp1
 
                                 }
                             }
-                            Thread.Sleep(1000);
+                            Thread.Sleep(2000);
+                                
                             var btns = driver.FindElements(By.ClassName("next-btn"));
-                            while (btns.Count < 16)
-                            {
-                                btns = driver.FindElements(By.ClassName("next-btn"));
-                                Thread.Sleep(1000);
+                                if (btns.Count < 16) goto redelete;
 
-                            }
                             Thread.Sleep(500);
-                            btns[15].Click();
+                                btns[15].Click();
+                                       Thread.Sleep(1500);
                             btns = driver.FindElements(By.ClassName("next-btn"));
-                            while (btns.Count < 18)
-                            {
-                                btns = driver.FindElements(By.ClassName("next-btn"));
-                                Thread.Sleep(1000);
-
-                            }
+                           if(btns.Count < 18) goto redelete;
                             Thread.Sleep(500);
                             btns[17].Click();
 
@@ -1000,7 +993,7 @@ namespace WindowsFormsApp1
 
                         for (int i = 0; i < list_product_info[pr].linksimg.Count; i++)
                         {
-                            if (i == 6) break;
+                            if (i >= 6) break;
 
                             if (i >= 9) break;
                             else
@@ -1030,6 +1023,7 @@ namespace WindowsFormsApp1
                             }
                         }
                         Thread.Sleep(3000);
+                            int reclick = 0;
                     reclcik:
                         var cmf_upload = driver.FindElements(By.ClassName("material-center-btn"));
                         while (cmf_upload.Count < 1)
@@ -1047,7 +1041,7 @@ namespace WindowsFormsApp1
 
                         }
 
-                        divpool = driver.FindElements(By.ClassName("mc-selectable"));
+                      var  divpool = driver.FindElements(By.ClassName("mc-selectable"));
                         while (divpool.Count < 2)
                         {
                             divpool = driver.FindElements(By.ClassName("mc-selectable"));
@@ -1056,7 +1050,17 @@ namespace WindowsFormsApp1
 
                         Thread.Sleep(500);
                         list_img_aviable = divpool[1].FindElements(By.ClassName("dada-image-table__item"));
-                        if (list_img_aviable.Count < 1) goto reclcik;
+                        if (list_img_aviable.Count < 1)
+                            {
+                                if (reclick <= 3)
+                                {
+                                    goto reclcik;
+                                }
+                                else
+                                {
+                                    goto redelete;
+                                }
+                            }
                         Thread.Sleep(500);
                         driver.Navigate().GoToUrl("https://sellercenter.lazada.vn/apps/product/publish");
                     }
