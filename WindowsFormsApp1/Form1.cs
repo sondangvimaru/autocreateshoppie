@@ -137,18 +137,17 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            getsigleproduct("https://www.lazada.vn/products/tai-nghe-edifier-x2x2s-khong-day-bluetooth-53-khu-tieng-on-bang-cong-nghe-ai-chong-nuoc-ip54-co-che-do-choi-game-thoi-gian-su-dung-len-toi-24-gio-i1722302253-s11269665280.html?c=&channelLpJumpArgs=&clickTrackInfo=query%253ATai%252Bnghe%252Bnh%2525C3%2525A9t%252Btai%252Bkh%2525C3%2525B4ng%252Bd%2525C3%2525A2y%253Bnid%253A1722302253%253Bsrc%253ALazadaMainSrp%253Brn%253A0e98f08a4b119a0088fa2536d02e38e9%253Bregion%253Avn%253Bsku%253A1722302253_VNAMZ%253Bprice%253A359000%253Bclient%253Adesktop%253Bsupplier_id%253A200167695324%253Bpromotion_biz%253A%253Basc_category_id%253A11412%253Bitem_id%253A1722302253%253Bsku_id%253A11269665280%253Bshop_id%253A2106025&fastshipping=0&freeshipping=1&fs_ab=2&fuse_fs=1&lang=vi&location=H%E1%BB%93%20Ch%C3%AD%20Minh&price=3.59E%205&priceCompare=&ratingscore=4.9053571428571425&request_id=0e98f08a4b119a0088fa2536d02e38e9&review=560&sale=2005&search=1&source=search&spm=a2o4n.searchlist.list.i41.dc573276OG3w40&stock=1");
-            // if(string.IsNullOrEmpty(tb_ref.Text)|| string.IsNullOrEmpty(textBox1.Text)|| string.IsNullOrEmpty(textBox2.Text)||string.IsNullOrEmpty(textBox3.Text)|| string.IsNullOrEmpty(tb_proxyapi.Text))
-            //{
-            //    MessageBox.Show("Vui lòng điền đầy đủ thông tin");
-            //    return;
-            //}
-            //else
-            //{
-            //    isrunning = true;
-            //    autoAsync();
+            if (string.IsNullOrEmpty(tb_ref.Text) || string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrEmpty(textBox2.Text) || string.IsNullOrEmpty(textBox3.Text) || string.IsNullOrEmpty(tb_proxyapi.Text))
+            {
+                MessageBox.Show("Vui lòng điền đầy đủ thông tin");
+                return;
+            }
+            else
+            {
+                isrunning = true;
+                autoAsync();
 
-            //}
+            }
         }
 
 
@@ -927,7 +926,7 @@ namespace WindowsFormsApp1
             await rungetsp(list_product_info);
 
             Thread.Sleep(1000);
-            int numsp = new Random().Next(10, 12);
+            int numsp = new Random().Next(11, 12);
             for (int pr = 0; pr < list_product_info.Count; pr++)
             {
                 if ((pr) > numsp) break;
@@ -1634,8 +1633,18 @@ namespace WindowsFormsApp1
         }
         public async Task rungetsp(List<productinfo> list_product_info)
         {
-            var list_product = getlistproduct();
+            redown:
+            int check=0;
+            try
+            {
 
+          
+            var list_product =  getlistproduct();
+            while (list_product == null)
+            {
+                list_product = getlistproduct();
+                Thread.Sleep(1000);
+            }
             foreach (var product in list_product)
             {
                 if (list_product_info.Count <= 11)
@@ -1661,7 +1670,12 @@ namespace WindowsFormsApp1
                 }
             }
             while ( list_product_info.Count<10) ;
-
+            }
+            catch
+            {
+                check = 1;
+            }
+            if (check == 1) goto redown;
         }
         public productinfo getsigleproduct(string ads_product)
         {
@@ -1751,9 +1765,14 @@ namespace WindowsFormsApp1
         }
         public List<string> getlistproduct()
         {
+            List<string> list_link_product = new List<string>();
+            try
+            {
+
+         
             var chromeDriverService = ChromeDriverService.CreateDefaultService();
             chromeDriverService.HideCommandPromptWindow = true;
-            List<string> list_link_product = new List<string>();
+           
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--headless");
         
@@ -1804,6 +1823,12 @@ namespace WindowsFormsApp1
                 goto addmoreproduct;
             }
             driver.Quit();
+            }
+            catch
+            {
+                return null;
+
+            }
             return list_link_product;
         }
         public bool checkexist(List<string> list, string search)
