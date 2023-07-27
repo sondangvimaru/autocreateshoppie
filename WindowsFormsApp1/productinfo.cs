@@ -10,5 +10,6 @@ namespace WindowsFormsApp1
     {
         public string name_product { get; set; }
         public List<string> linksimg { get; set; }
+        public string dec { get; set; }
     }
 }

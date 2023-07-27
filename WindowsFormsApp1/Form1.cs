@@ -137,17 +137,18 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-             if(string.IsNullOrEmpty(tb_ref.Text)|| string.IsNullOrEmpty(textBox1.Text)|| string.IsNullOrEmpty(textBox2.Text)||string.IsNullOrEmpty(textBox3.Text)|| string.IsNullOrEmpty(tb_proxyapi.Text))
-            {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin");
-                return;
-            }
-            else
-            {
-                isrunning = true;
-                autoAsync();
-                 
-            }
+            getsigleproduct("https://www.lazada.vn/products/tai-nghe-edifier-x2x2s-khong-day-bluetooth-53-khu-tieng-on-bang-cong-nghe-ai-chong-nuoc-ip54-co-che-do-choi-game-thoi-gian-su-dung-len-toi-24-gio-i1722302253-s11269665280.html?c=&channelLpJumpArgs=&clickTrackInfo=query%253ATai%252Bnghe%252Bnh%2525C3%2525A9t%252Btai%252Bkh%2525C3%2525B4ng%252Bd%2525C3%2525A2y%253Bnid%253A1722302253%253Bsrc%253ALazadaMainSrp%253Brn%253A0e98f08a4b119a0088fa2536d02e38e9%253Bregion%253Avn%253Bsku%253A1722302253_VNAMZ%253Bprice%253A359000%253Bclient%253Adesktop%253Bsupplier_id%253A200167695324%253Bpromotion_biz%253A%253Basc_category_id%253A11412%253Bitem_id%253A1722302253%253Bsku_id%253A11269665280%253Bshop_id%253A2106025&fastshipping=0&freeshipping=1&fs_ab=2&fuse_fs=1&lang=vi&location=H%E1%BB%93%20Ch%C3%AD%20Minh&price=3.59E%205&priceCompare=&ratingscore=4.9053571428571425&request_id=0e98f08a4b119a0088fa2536d02e38e9&review=560&sale=2005&search=1&source=search&spm=a2o4n.searchlist.list.i41.dc573276OG3w40&stock=1");
+            // if(string.IsNullOrEmpty(tb_ref.Text)|| string.IsNullOrEmpty(textBox1.Text)|| string.IsNullOrEmpty(textBox2.Text)||string.IsNullOrEmpty(textBox3.Text)|| string.IsNullOrEmpty(tb_proxyapi.Text))
+            //{
+            //    MessageBox.Show("Vui lòng điền đầy đủ thông tin");
+            //    return;
+            //}
+            //else
+            //{
+            //    isrunning = true;
+            //    autoAsync();
+
+            //}
         }
 
 
@@ -1322,49 +1323,49 @@ namespace WindowsFormsApp1
                             Thread.Sleep(1000);
                             js.ExecuteScript("arguments[0].style.display = 'block';", textaria[0]);
                             Thread.Sleep(500);
-                            textaria[0].SendKeys(list_product_info[pr].name_product);
-                            Thread.Sleep(1000);
-                            var uploadimg = driver.FindElements(By.ClassName("sc-kMrHXl"));
-                            while (uploadimg.Count < 1)
-                            {
-                                uploadimg = driver.FindElements(By.ClassName("sc-kMrHXl"));
-                                Thread.Sleep(1000);
-                            }
-                            Thread.Sleep(1000);
-                            uploadimg[0].Click();
-                            Thread.Sleep(1000);
-                            var imgs = driver.FindElements(By.ClassName("dada-image-table__item"));
-                            while(imgs.Count < 1)
-                            {
-                                imgs = driver.FindElements(By.ClassName("dada-image-table__item"));
-                                Thread.Sleep(1000);
-                            }
-                            Thread.Sleep(1000);
+                            textaria[0].SendKeys(list_product_info[pr].dec);
+                           // Thread.Sleep(1000);
+                           // var uploadimg = driver.FindElements(By.ClassName("sc-kMrHXl"));
+                           // while (uploadimg.Count < 1)
+                           // {
+                           //     uploadimg = driver.FindElements(By.ClassName("sc-kMrHXl"));
+                           //     Thread.Sleep(1000);
+                           // }
+                           // Thread.Sleep(1000);
+                           // uploadimg[0].Click();
+                           // Thread.Sleep(1000);
+                           // var imgs = driver.FindElements(By.ClassName("dada-image-table__item"));
+                           // while(imgs.Count < 1)
+                           // {
+                           //     imgs = driver.FindElements(By.ClassName("dada-image-table__item"));
+                           //     Thread.Sleep(1000);
+                           // }
+                           // Thread.Sleep(1000);
                            
-                            int max = new Random().Next(1, 2);
-                            if (imgs.Count < max) max = 1;
-                           for(int i=0;i<max;i++)
-                            {
-                                imgs[i].Click();
+                           // int max = new Random().Next(1, 2);
+                           // if (imgs.Count < max) max = 1;
+                           //for(int i=0;i<max;i++)
+                           // {
+                           //     imgs[i].Click();
 
-                            }
-                            Thread.Sleep(500);
-                            var btnsm = driver.FindElements(By.ClassName("next-btn-helper"));
-                            while(btnsm.Count < 1)
-                            {
-                                btnsm = driver.FindElements(By.ClassName("next-btn-helper"));
-                                Thread.Sleep(1000);
-                            }
-                            Thread.Sleep(1000);
-                            foreach(var btn in btnsm)
-                            {
+                           // }
+                           // Thread.Sleep(500);
+                           // var btnsm = driver.FindElements(By.ClassName("next-btn-helper"));
+                           // while(btnsm.Count < 1)
+                           // {
+                           //     btnsm = driver.FindElements(By.ClassName("next-btn-helper"));
+                           //     Thread.Sleep(1000);
+                           // }
+                           // Thread.Sleep(1000);
+                           // foreach(var btn in btnsm)
+                           // {
 
-                                if (btn.Text.Trim()=="Gửi")
-                                {
-                                    btn.Click();
-                                    break;
-                                }
-                            }
+                           //     if (btn.Text.Trim()=="Gửi")
+                           //     {
+                           //         btn.Click();
+                           //         break;
+                           //     }
+                           // }
                         }
                         catch
                         {
@@ -1674,7 +1675,7 @@ namespace WindowsFormsApp1
             chromeDriverService.HideCommandPromptWindow = true;
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--start-maximized");
-            options.AddArgument("--headless");
+          //  options.AddArgument("--headless");
             options.AddArgument("--disable-gpu");
 
             var driver = new ChromeDriver(chromeDriverService, options);
@@ -1725,7 +1726,19 @@ namespace WindowsFormsApp1
 
                 }
             }
-            driver.Quit();
+                IJavaScriptExecutor jsExecutor = (IJavaScriptExecutor)driver;
+
+                jsExecutor.ExecuteScript("window.scrollBy(0, 1200);");
+                var mota = driver.FindElements(By.ClassName("html-content"));
+                while(mota.Count <2)
+                {
+                    mota = driver.FindElements(By.ClassName("html-content"));
+                    Thread.Sleep(1000);
+                }
+                Thread.Sleep(500);
+                string content = mota[0].Text + "\n" + mota[1].Text;
+                result.dec = content;
+                driver.Quit();
             if (result.linksimg.Count > 1) return result;
             }
             catch
