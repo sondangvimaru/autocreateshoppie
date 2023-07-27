@@ -1025,11 +1025,20 @@ namespace WindowsFormsApp1
                         Thread.Sleep(3000);
                             int reclick = 0;
                     reclcik:
-                        var cmf_upload = driver.FindElements(By.ClassName("material-center-btn"));
+                          var  list_img_aviablett = driver.FindElements(By.ClassName("dada-image-table__item"));
+                            var cmf_upload = driver.FindElements(By.ClassName("material-center-btn"));
                         while (cmf_upload.Count < 1)
                         {
                             cmf_upload = driver.FindElements(By.ClassName("material-center-btn"));
                             Thread.Sleep(1000);
+                                if(list_img_aviablett.Count > 0)
+                                {
+                                    break;
+                                }
+                                else
+                                {
+                                    list_img_aviablett = driver.FindElements(By.ClassName("dada-image-table__item"));
+                                }
                         }
                         Thread.Sleep(500);
                         try
@@ -1041,19 +1050,15 @@ namespace WindowsFormsApp1
 
                         }
 
-                      var  divpool = driver.FindElements(By.ClassName("mc-selectable"));
-                        while (divpool.Count < 2)
-                        {
-                            divpool = driver.FindElements(By.ClassName("mc-selectable"));
-                            Thread.Sleep(1000);
-                        }
+                   
 
-                        Thread.Sleep(500);
-                        list_img_aviable = divpool[1].FindElements(By.ClassName("dada-image-table__item"));
-                        if (list_img_aviable.Count < 1)
+                        Thread.Sleep(3500);
+                       var list_img_aviable2 = driver.FindElements(By.ClassName("dada-image-table__item"));
+                        if (list_img_aviable2.Count < 1)
                             {
                                 if (reclick <= 3)
                                 {
+                                    reclick++;
                                     goto reclcik;
                                 }
                                 else
@@ -1698,7 +1703,7 @@ namespace WindowsFormsApp1
             chromeDriverService.HideCommandPromptWindow = true;
             ChromeOptions options = new ChromeOptions();
             options.AddArgument("--start-maximized");
-          //  options.AddArgument("--headless");
+           options.AddArgument("--headless");
             options.AddArgument("--disable-gpu");
 
             var driver = new ChromeDriver(chromeDriverService, options);
