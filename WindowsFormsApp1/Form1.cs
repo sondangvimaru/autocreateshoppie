@@ -1667,7 +1667,9 @@ namespace WindowsFormsApp1
                 list_product = getlistproduct();
                 Thread.Sleep(1000);
             }
-            foreach (var product in list_product)
+                int max = 14;
+                if (list_product.Count < max) max = list_product.Count;
+         for(int i=0;i <max; i++)
             {
                 if (list_product_info.Count <= 11)
                 {
@@ -1678,12 +1680,13 @@ namespace WindowsFormsApp1
                     
 
                    
-                        var products = getsigleproduct(product);
+                        var products = getsigleproduct(list_product[i]);
                     if (products != null)
                     {
                         list_product_info.Add(products);
                     }  
                 });
+                        t.IsBackground = true;
                 t.Start();
                 }
                 else
